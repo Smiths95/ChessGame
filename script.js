@@ -8,7 +8,6 @@ angular.module('myApp', []).controller('GameController', ['$scope', function($sc
     for(var i = 0; i < $scope.size; i++) { 
         $scope.widths.push(i);
     }
-	
 }]);
 
 $(document).ready(function() {   
@@ -29,9 +28,6 @@ $(document).ready(function() {
             optionColor: '#FC4C02',
             optionHoverColor: '#FC4C02'
         },
-        
-        
-       
     ];
     
     var colors = [
@@ -45,95 +41,37 @@ $(document).ready(function() {
     var colorOption = 0;
     var themeOption = 1;
     
-    
-    
-    //Set up theme
+    //Set up background theme
     var setTheme = function() {
         var theme = themes[themeOption];
         
         $('#theme-option').html(theme.name);
-        
-        
         $('.light-box').css('background', theme.lightBoxColor);
-        
-        
-        $('.option-nav').css('color', theme.optionColor);
-        
-        //Option button effect
-        $('#option').css('color', theme.optionColor);
-        $('#option').hover(
-            function() {
-                $(this).css('color', theme.optionHoverColor);
-            }, function() {
-                $(this).css('color', theme.optionColor);
-            }
-        );
-        
-        //Pawn promotion event
-		 $('#pawn-promotion-option .option').on('click', function() {
-
-      var newType = $(this).attr('id');
-      promotion.box.html(chessPieces[promotion.color][newType]);
-      promotion.box.addClass('placed');
-      promotion.box.attr('piece', promotion.color + '-' + newType);
-
-      $('#pawn-promotion-option').addClass('hide');
-      $('#game').css('opacity', '1');
-
-      promotion = {};
-   });
-        
+        $('.option-nav').css('color', theme.optionColor)
     }
     
-    //Set up color for chess pieces
+    //Set up color for  pieces
     var setColor = function() {
         var color = colors[colorOption];
         
         $('#color-option').html(color.name);
-        
-        
-        
+      
         $('#pawn-promotion-option').css('color', color['color']);
         
         $('#player').css('color', color['color']);
     }
 	 
-	
 
-	//Chess pieces
-	var chessPieces = {
-		 'white': {
-			  'king': '&#9812;',
-			  'queen': '&#9813;',
-			  'rook': '&#9814;',
-			  'bishop': '&#9815;',
-			  'knight': '&#9816;',
-			  'pawn': '&#9817;'
-		 },
-		 'black': {
-			  'king': '&#9818;',
-			  'queen': '&#9819;',
-			  'rook': '&#9820;',
-			  'bishop': '&#9821;',
-			  'knight': '&#9822;',
-			  'pawn': '&#9823;'
-		 }
-	};
+	var player = 'black'; //First move
 
-	var player = 'black'; //First player
-
-	//Selected chess piece to move
+	// chess piece to move first
 	var select = {
 		 canMove: false, //Ready to move of not
 		 piece: '',      //Color, type of the piece
 		 box: ''         //Position of the piece
 	}
 
-	
-
-
-
-	//Set up board game
+	//Set up board game on loading
 	$(function() {		 
 		$('#player').html(chessPieces.black.king);
 
@@ -153,8 +91,6 @@ $(document).ready(function() {
 		 setTheme();
 	});
 
-	
-
 		$(function() {
 			 //Option menu
 			 $('#option').on('click', function() {
@@ -170,7 +106,7 @@ $(document).ready(function() {
 
 		 //Box click event
 		 $('.box').on('click', function() {
-			  if($(this).hasClass('selected')) { //Undo to select new box
+			  if($(this).hasClass('selected')) { //Undo
 					$(this).removeClass('selected');
 
 					$('.box').removeClass('suggest');
@@ -180,56 +116,15 @@ $(document).ready(function() {
 
 			  //Select new box
 			  if(!select.canMove) {
-					//Check the right color to play
 					if($(this).attr('piece').indexOf(player) >= 0) {
-						 //Select a piece to move
 						 selectPiece($(this));
 					}
 			  }
-
-			  //Set up new destination for selected box
-			  else if(select.canMove) { 
-					var selectedPieceInfo = select.piece.split('-');
-					var color = selectedPieceInfo[0];
-					var type = selectedPieceInfo[1];
-
-					
-
-					//Can move if it is valid
-					if($(this).hasClass('suggest')) { 
-
-						 //Save move in history
-						 var move = {
-							  previous: {},
-							  current: {}
-						 }
-
-						 move.previous.piece = select.piece;
-						 move.previous.box = select.box;
-
-						 move.current.piece = $(this).attr('piece');
-						 move.current.box = $(this).attr('id');
-
-						 historyMoves.push( move );
-
-						 //Move selected piece successfully
-						 setPiece($(this), color, type);
-
-						 //Delete moved box
-						 deleteBox($('#' + select.box));
-
-						 $('.box').removeClass('suggest');
-
-						 select = { canMove: false, piece: '', box: '' };
-
-						 //Switch player
-						 switchPlayer();
-					}
-			  }
+			 
 		 });
 	});
 
-	//Get piece and position of the selected piece
+	//Get piece and position for the selected piece
 	var selectPiece = function(box) {
 		 box.addClass('selected');
 		 select.box = box.attr('id');
@@ -238,9 +133,6 @@ $(document).ready(function() {
 
 		 suggestNextMoves(getNextMoves(select.piece, select.box));
 	}
-
-
-
 
 	//Set up piece for clicked box
 	var setPiece = function(box, color, type) {
@@ -255,17 +147,13 @@ $(document).ready(function() {
 
 			  return;
 		 }
-
-		 
-
+		
 		 box.html(chessPieces[color][type]);
 		 box.addClass('placed');
 		 box.attr('piece', color + '-' + type);
 	}
 
-	
-
-	//Default board state
+	//Default board state 
 	var setNewBoard = function(box, i, j) {
 		 if(j === 7) {
 			  if(i === 0 || i === 7) {
@@ -298,27 +186,29 @@ $(document).ready(function() {
 		 }
 	}
 
-//Reset game
-$('#restart-btn').on('click', function() {
-  resetGame(); 
-});
-
-	//Restart game
+	//Restart game 
 	var resetGame = function() {
-		 deleteBox($('.box'));
-		 $('#player').html(chessPieces.black.king);
-		 $('#result').addClass('hide');
-		 $('#option-menu').addClass('hide');
-		 $('#game').css('opacity', '1');
-
-		 
-
-		 
-
-		 historyMoves = [];
-		 promotion = {};
 	}
 
-	
-    
 });
+
+
+	// pieces
+	var chessPieces = {
+    'white': {
+       'king': '&#9812;',
+       'queen': '&#9813;',
+       'rook': '&#9814;',
+       'bishop': '&#9815;',
+       'knight': '&#9816;',
+       'pawn': '&#9817;'
+    },
+    'black': {
+       'king': '&#9818;',
+       'queen': '&#9819;',
+       'rook': '&#9820;',
+       'bishop': '&#9821;',
+       'knight': '&#9822;',
+       'pawn': '&#9823;'
+    }
+ };
