@@ -1,24 +1,13 @@
-
-
 body {
  width: 580px;
  margin: 10px auto;
 }
-
-
 #board {
   width: 480px;
   margin: 15px auto 20px auto;
-  
-  border: 25px solid #fff;
-  
+  border: 25px solid #FC4C02;
   
 }
-
-#game {
-  
-}
-
 .row {
   clear: both;
   overflow: hidden;
@@ -34,59 +23,11 @@ body {
   cursor: default;
 }
 
-.placed {
-  cursor: pointer;
-}
-
 .selected {
-  -moz-box-shadow:    inset 0 0 10px #311B0B;
-  -webkit-box-shadow: inset 0 0 10px #311B0B;
-  box-shadow:         inset 0 0 10px #311B0B;
+  -moz-box-shadow:    inset 0 0 10px #FC4C02;
+  -webkit-box-shadow: inset 0 0 10px #FC4C02;
+  box-shadow:         inset 0 0 10px #FC4C02;
 }
-
-
-
-
-
-#result {
-  width: 480px;
-  height: 480px;
-  line-height: 480px;
-  position: absolute;
-  background: transparent;
-  text-align: center;
-  font-size: 90px;
-  cursor: default;
-  animation: blur 1.5s ease-out infinite;
-  z-index: 10;
-}
-
-.hide {
-  display: none;
-}
-
-
-
-#pawn-promotion-option {
-  width: 480px;
-  height: 480px;
-  line-height: 480px;
-  position: absolute;
-  background: transparent;
-  text-align: center;
-  font-size: 90px;
-  cursor: default;
-  z-index: 10;
-}
-
-#pawn-promotion-option .option {
-  cursor: pointer;
-}
-
-
-
-
-
 
 
 #undo-btn, #option {
@@ -129,23 +70,15 @@ body {
 }
 
 
-
-
-
-
-
-
-
 #restart-btn {
-  width: 280px;
-  margin: 40px auto 0 auto;;
+  width: 20px;
+  margin: 5px auto 0 auto;;
+  color: #FC4C02;
 }
 
 .button {
   cursor: pointer;
 }
-
-
 
 @media only screen and (max-width: 570px) {
 body {
@@ -164,41 +97,19 @@ body {
       font-size: 36px;
    font-weight: normal;
   }
-  
- 
-  
- 
-  
-  #back-btn {
-      margin-top: 25px;
-  }
-  
+
   .option-nav {
     margin: 0 auto;
       width: 340px;
       font-size: 24px;
     line-height: 10px;
   }
-  
- #player-nav {
-    width: 30%;
-     margin-top: 5px;
- }
 
- #player {
-     font-size: 28px;		
- }
-
-
- 
-
-  
   #pawn-promotion-option {
       width: 320px;
       height: 320px;
       font-size: 60px;
       line-height: 320px;
   }
-  
   
 }
