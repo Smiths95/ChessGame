@@ -14,20 +14,20 @@ angular.module('myApp', []).controller('GameController', ['$scope', function($sc
 $(document).ready(function() {   
     var themes = [
         {
-            name: 'CLASSIC',
-            boardBorderColor: '#666',
-            lightBoxColor: '#fff',
-            darkBoxColor: '#ccc',
-            optionColor: '#000',
-            optionHoverColor: '#999'
+            name: 'ORANGE',
+            boardBorderColor: '#FC4C02',
+            lightBoxColor: '#FC4C02',
+            darkBoxColor: '#FC4C02',
+            optionColor: '#FC4C02',
+            optionHoverColor: '#FC4C02'
         },
         {   
-            name: 'WOOD',
-            boardBorderColor: '#803E04',
-            lightBoxColor: '#FFCE9E',
-            darkBoxColor: '#D18B47',
-            optionColor: '#803E04',
-            optionHoverColor: '#311B0B'
+            name: 'BLUE',
+            boardBorderColor: '#FC4C02',
+            lightBoxColor: '#008E97',
+            darkBoxColor: '#FC4C02',
+            optionColor: '#FC4C02',
+            optionHoverColor: '#FC4C02'
         },
         
         
@@ -39,9 +39,6 @@ $(document).ready(function() {
             name: 'BLACK',
             color: '#000'
         }, 
-       
-       
-        
         
     ];
     
@@ -72,11 +69,21 @@ $(document).ready(function() {
             }
         );
         
-        
+        //Pawn promotion event
+		 $('#pawn-promotion-option .option').on('click', function() {
+
+      var newType = $(this).attr('id');
+      promotion.box.html(chessPieces[promotion.color][newType]);
+      promotion.box.addClass('placed');
+      promotion.box.attr('piece', promotion.color + '-' + newType);
+
+      $('#pawn-promotion-option').addClass('hide');
+      $('#game').css('opacity', '1');
+
+      promotion = {};
+   });
         
     }
-    
-    
     
     //Set up color for chess pieces
     var setColor = function() {
@@ -122,8 +129,7 @@ $(document).ready(function() {
 		 box: ''         //Position of the piece
 	}
 
-	//Game's history (pieces + positions)
-	var historyMoves = [];
+	
 
 
 
@@ -161,16 +167,6 @@ $(document).ready(function() {
 				  }
 			 });
 
-			 //Back button
-			 
-			
-		 
-
-	
-
-		 
-
-		
 
 		 //Box click event
 		 $('.box').on('click', function() {
@@ -197,14 +193,7 @@ $(document).ready(function() {
 					var color = selectedPieceInfo[0];
 					var type = selectedPieceInfo[1];
 
-					//Select new piece to move if 2 colors are the same
-					if($(this).attr('piece').indexOf(color) >= 0) {
-						 $('#' + select.box).removeClass('selected');
-						 $('.box').removeClass('suggest');
-						 //Select a piece to move
-						 selectPiece($(this));
-						 return;
-					}
+					
 
 					//Can move if it is valid
 					if($(this).hasClass('suggest')) { 
@@ -250,51 +239,6 @@ $(document).ready(function() {
 		 suggestNextMoves(getNextMoves(select.piece, select.box));
 	}
 
-	
-
-	
-
-	//Calculate next moves for pawn pieces
-	var getPawnMoves = function(i, j, color, moves) {
-		 var nextMoves = [];
-		 for(var index = 0; index < moves.length; index++) {
-			  var tI = i + moves[index][0];
-			  var tJ = j + moves[index][1];
-			  if( !outOfBounds(tI, tJ) ) {
-					var box = $('#box-' + tI + '-' + tJ);
-
-					if(index === 0) { //First line
-						 if(!box.hasClass('placed')) {
-							  nextMoves.push([tI, tJ]);
-						 } else {
-							  index++;
-						 }
-					} else if(index === 1) { //First line
-						 if( ((color === 'black' && j === 1) ||
-								 (color === 'white' && j === 6)) &&
-							  !box.hasClass('placed')) {
-							  nextMoves.push([tI, tJ]);
-						 }
-					} else if(index > 1) { //Other lines
-						 if(box.attr('piece') !== '' && box.attr('piece').indexOf(color) < 0) {
-							  nextMoves.push([tI, tJ]);
-						 }
-					}
-			  }
-		 }
-		 return nextMoves;
-	}
-
-	
-
-	
-
-	
-
-	
-
-
-
 
 
 
@@ -312,25 +256,7 @@ $(document).ready(function() {
 			  return;
 		 }
 
-		 //Check if pawn reached the last line
-		 var j = parseInt(box.attr('id').charAt(6));
-		 if(type === 'pawn') {
-			  if( (player === 'black' && j === 7) ||
-					(player === 'white' && j === 0)) {
-					$('#game').css('opacity', '0.5');
-
-					var option = $('#pawn-promotion-option');
-					option.removeClass('hide');
-					option.find('#queen').html(chessPieces[player].queen);
-					option.find('#rook').html(chessPieces[player].rook);
-					option.find('#knight').html(chessPieces[player].knight);
-					option.find('#bishop').html(chessPieces[player].bishop);
-
-					promotion = { box: box, color: color };
-
-					return;
-			  }
-		 }
+		 
 
 		 box.html(chessPieces[color][type]);
 		 box.addClass('placed');
@@ -372,7 +298,10 @@ $(document).ready(function() {
 		 }
 	}
 
-
+//Reset game
+$('#restart-btn').on('click', function() {
+  resetGame(); 
+});
 
 	//Restart game
 	var resetGame = function() {
@@ -384,13 +313,7 @@ $(document).ready(function() {
 
 		 
 
-		 //Set global variables to default
-		 player = 'black';
-		 select = {
-			  canMove: false,
-			  piece: '',
-			  box: ''
-		 };
+		 
 
 		 historyMoves = [];
 		 promotion = {};
