@@ -1,52 +1,262 @@
-* {transition: all 0.2s linear !important;}
 
-#chess {
-  width: 100%; height:100%; display: block; background: #eee;
-  margin: 0; padding: 0; overflow: overlay;
+
+body {
+ width: 580px;
+ margin: 10px auto;
 }
 
-#wrap {display:block; margin: 1rem auto; max-width: 90%; width: 600px; padding: 1rem;}
+/*=====BOARD GAME=================*/
 
-#chess-board {border:solid 3px black; background:#eee; display:inline-flex; flex-wrap: wrap;}
+#board {
+  width: 480px;
+  margin: 15px auto 20px auto;
+  border: 25px solid #fff;
+  border-radius: 10px;
 
-.square {
-  width: 75px; height: 75px; margin: 0; padding: 0; 
-  border: 0; max-width: 12.5%; text-align: center;
-  display: inline-block;
 }
 
-.square.white,
-.chess-piece i.black {background: white;}
-.square.black,
-.chess-piece i.white {background: black;}
-
-.chess-piece i.black {color: black !important; border:solid 1px black;}
-.chess-piece i.white {color: white !important; border:solid 1px white;}
-
-.chess-piece i {
-  padding: 1rem; font-size: 1.5rem; margin-top: 0.5rem;
-  border-radius: 50%; width: 25px; height: 25px; max-width: 90%;
+#game {
+  
 }
 
-.square.piece-selected {background-color: yellow !important;}
+.row {
+  clear: both;
+  overflow: hidden;
+}
 
-.square.square-selected {background: orange !important;}
+.box {
+  width: 60px;
+  height: 60px;
+  float: left;
+  text-align: center;
+  line-height: 60px;
+  font-size: 50px;
+  cursor: default;
+}
 
-.square.capturable-selected {background: red !important;}
+.placed {
+  cursor: pointer;
+}
 
-.chess-panel {padding: 0.5rem; margin: 1rem auto;}
-.chess-panel-header {text-align:center;}
-.chess-panel.white {background: white;}
-.chess-panel.black {background: black;}
-.white-text {color: white;}
-.taken-pieces {padding: 0.5rem;}
-.chess-panel.white .taken-pieces {border: solid 1px black;}
-.chess-panel.black .taken-pieces {border: solid 1px white;}
 
-@media screen and (max-width:1024px) {
-  .chess-piece i {
-    margin-top: 0.5rem; width: 15px; height: 15px;
-    padding 0.3rem; line-height: 0.5;
+
+
+
+/*============================================*/
+
+#result {
+  width: 480px;
+  height: 480px;
+  line-height: 480px;
+  position: absolute;
+  background: transparent;
+  text-align: center;
+  font-size: 90px;
+  cursor: default;
+  animation: blur 1.5s ease-out infinite;
+  z-index: 10;
+}
+
+.hide {
+  display: none;
+}
+
+@keyframes blur{
+from {
+    text-shadow:0px 0px 10px #fff,
+                0px 0px 10px #fff, 
+                0px 0px 25px #fff,
+                0px 0px 25px #fff,
+                0px 0px 25px #fff,
+                0px 0px 25px #fff,
+                0px 0px 25px #fff,
+                0px 0px 25px #fff,
+                0px 0px 50px #fff,
+                0px 0px 50px #fff,
+                0px 0px 50px #7B96B8,
+                0px 0px 150px #7B96B8,
+                0px 10px 100px #7B96B8,
+                0px 10px 100px #7B96B8,
+                0px 10px 100px #7B96B8,
+                0px 10px 100px #7B96B8,
+                0px -10px 100px #7B96B8,
+                0px -10px 100px #7B96B8;
   }
-  .square {height: 80px; width: 80px;}
+}
+
+#pawn-promotion-option {
+  width: 480px;
+  height: 480px;
+  line-height: 480px;
+  position: absolute;
+  background: transparent;
+  text-align: center;
+  font-size: 90px;
+  cursor: default;
+  z-index: 10;
+}
+
+#pawn-promotion-option .option {
+  cursor: pointer;
+}
+
+/*========================================*/
+
+.option-nav {
+  height: 20px;
+  width: 500px;
+  font-size: 30px;
+  margin: 0 auto;
+ line-height: 15px;
+}
+
+#player-nav {
+  display: inline-block;
+  cursor: default;
+  float: left;
+  width: 200px;
+  text-align: left;
+ margin-top: 5px;
+}
+
+#player {
+  font-size: 32px;
+  color: #000;
+}
+
+#undo-btn, #option {
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+  margin-left: 50px;
+ position: relative;
+}
+
+.btn .tooltiptext {
+  visibility: hidden;
+  font-family: monospace;
+  width: 100px;
+  background: #000;
+  color: #ccc;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  line-height: 20px;
+  font-size: 22px;
+
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 50%;
+  margin-left: -50px;
+}
+
+#undo-btn .tooltiptext {
+width: 80px;
+margin-left: -40px;
+}
+
+.btn .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #000 transparent;
+}
+
+.btn:hover .tooltiptext {
+  visibility: visible;
+}
+
+/*=================*/
+
+
+
+#back-btn {
+  width: 100px;
+  margin: 60px auto 0 auto;
+}
+
+#theme-menu {
+  width: 100%;
+  margin: 40px auto 0 auto;
+}
+
+#color-menu {
+  width: 100%;
+  margin: 40px auto 0 auto;
+}
+
+
+
+.button {
+  cursor: pointer;
+}
+
+/* Responsive design */
+
+@media only screen and (max-width: 570px) {
+body {
+  width: 100%;
+}
+
+  #board {
+      width: 320px;
+   border-width: 13px;
+  }
+  
+  .box {
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 36px;
+   font-weight: normal;
+  }
+  
+  #option {
+      width: 80px;
+  }
+  
+  #option-menu {
+      width: 320px;
+      height: 320px;
+      font-size: 26px;
+  }
+  
+  #back-btn {
+      margin-top: 25px;
+  }
+  
+
+ #player-nav {
+    width: 30%;
+     margin-top: 5px;
+ }
+
+ #player {
+     font-size: 28px;		
+ }
+
+ #undo-btn {
+    margin-left: 20px;
+ }
+ 
+
+  
+  #pawn-promotion-option {
+      width: 320px;
+      height: 320px;
+      font-size: 60px;
+      line-height: 320px;
+  }
+  
+  #result {
+      width: 320px;
+      height: 320px;
+      font-size: 60px;
+      line-height: 320px;
+  }
 }
