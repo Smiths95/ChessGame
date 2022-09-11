@@ -13,11 +13,11 @@ Controls:
  Suppose to use mouse button to interact with the game, and switch with another person in the room.
 
  Goals:
- Get the pieces to move after a highlighted clickf
+ Get the pieces to move after a highlighted click
 
  Used:
  VScode (HTML, CSS, JS)
- Canvas activities to reference Git steps
+ Canvas activities to reference Git steps and other forgotten tips
  Royalty free chess pieces
- Various Youtube videos and GitHub repositories
+ Various Youtube videos and GitHub repositories to get scripts to run
  Dolphins Hex Code: https://teamcolorcodes.com/miami-dolphins-color-codes/ & https://sportsfancovers.com/nfl-team-colors/miami-dolphins-team-colors/
